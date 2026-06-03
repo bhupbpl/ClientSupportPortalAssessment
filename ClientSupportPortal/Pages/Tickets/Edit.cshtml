@@ -1,0 +1,48 @@
+@page "{id:int}"
+@model ClientSupportPortal.Pages.Tickets.EditModel
+@{
+    ViewData["Title"] = "Edit Ticket";
+}
+
+<h1 class="h3 mb-3">Edit ticket</h1>
+
+<form method="post" class="row g-3">
+    <input type="hidden" asp-for="Ticket.Id" />
+
+    <div class="col-md-8">
+        <label class="form-label" asp-for="Ticket.Title">Title</label>
+        <input class="form-control" asp-for="Ticket.Title" />
+    </div>
+    <div class="col-md-4">
+        <label class="form-label" asp-for="Ticket.Category">Category</label>
+        <input class="form-control" asp-for="Ticket.Category" />
+    </div>
+    <div class="col-12">
+        <label class="form-label" asp-for="Ticket.Description">Description</label>
+        <textarea class="form-control" asp-for="Ticket.Description" rows="4"></textarea>
+    </div>
+    <div class="col-md-4">
+        <label class="form-label" asp-for="Ticket.RequesterName">Requester name</label>
+        <input class="form-control" asp-for="Ticket.RequesterName" />
+    </div>
+    <div class="col-md-4">
+        <label class="form-label" asp-for="Ticket.RequesterEmail">Requester email</label>
+        <input class="form-control" asp-for="Ticket.RequesterEmail" />
+    </div>
+    <div class="col-md-4">
+        <label class="form-label" asp-for="Ticket.AssignedTo">Assigned to</label>
+        <input class="form-control" asp-for="Ticket.AssignedTo" />
+    </div>
+    <div class="col-md-3">
+        <label class="form-label" asp-for="Ticket.Status">Status</label>
+        <input class="form-control" asp-for="Ticket.Status" />
+    </div>
+    <div class="col-md-3">
+        <label class="form-label" asp-for="Ticket.Priority">Priority</label>
+        <input class="form-control" asp-for="Ticket.Priority" />
+    </div>
+    <div class="col-12">
+        <button class="btn btn-primary" type="submit">Save</button>
+        <a class="btn btn-outline-secondary" asp-page="./Index">Cancel</a>
+    </div>
+</form>
