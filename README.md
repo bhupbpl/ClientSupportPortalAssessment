@@ -87,18 +87,28 @@ We are more interested in your judgement and approach than in seeing every issue
 
 ## Returning Your Work
 
-At the end of the 60 minutes, please return your completed work using the method agreed before the assessment.
+At the end of the 60 minutes, please return your completed work using the submission method provided by DSP.
 
-This will usually be one of the following:
+Submission details, including upload links, will be provided separately by email.
 
-1. Email back a zipped copy of the project folder.
-2. Commit your changes to a Git repository and send us the repository link.
+Your submission should include:
+
+1. A zipped copy of your completed project
+2. A short note covering:
+   - What you changed
+   - Anything you did not have time to complete
+   - Any assumptions you made
 
 If returning a zipped copy, please exclude build output and local IDE folders where possible, such as:
 
 - `bin`
 - `obj`
 - `.vs`
+
+Please name your files clearly, for example:
+
+- `YourName-DotNetAssessment.zip`
+- `YourName-Notes.txt`
 
 ---
 
