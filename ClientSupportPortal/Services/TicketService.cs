@@ -13,37 +13,36 @@ public class TicketService(AppDbContext context)
 
     public async Task<List<Ticket>> GetFilteredTicketsAsync(string? searchTerm, string? status, string? priority)
     {
-        var tickets = await context.Tickets
-            .OrderBy(t => t.CreatedDate)
-            .ToListAsync();
+        /*Improving performance, move filtering logic to the database query using IQueryable
+             Filters execute on database server
+             Only matching records are loaded into memory
+             Scalable for large datasets
+         */
+
+        IQueryable<Ticket> query = context.Tickets;
 
         if (!string.IsNullOrWhiteSpace(searchTerm))
         {
             var search = searchTerm.Trim();
-            tickets = tickets
-                .Where(t =>
-                    ContainsText(t.Title, search)
-                    || ContainsText(t.Description, search)
-                    || ContainsText(t.RequesterName, search)
-                    || ContainsText(t.AssignedTo, search))
-                .ToList();
+            query = query.Where(t =>
+                EF.Functions.Like(t.Title!, $"%{search}%") ||
+                EF.Functions.Like(t.Description!, $"%{search}%") ||
+                EF.Functions.Like(t.RequesterName!, $"%{search}%") ||
+                EF.Functions.Like(t.AssignedTo!, $"%{search}%"));
         }
 
         if (!string.IsNullOrWhiteSpace(status))
         {
-            tickets = tickets
-                .Where(t => t.Status == status)
-                .ToList();
+            query = query.Where(t => t.Status == status);
         }
 
         if (!string.IsNullOrWhiteSpace(priority))
         {
-            tickets = tickets
-                .Where(t => t.Priority == priority)
-                .ToList();
+            query = query.Where(t => t.Priority == priority);
         }
 
-        return tickets;
+        return await query.OrderByDescending(t => t.CreatedDate).ToListAsync();
+    
     }
 
     public async Task AddAsync(Ticket ticket)

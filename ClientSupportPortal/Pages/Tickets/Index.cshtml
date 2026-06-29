@@ -60,7 +60,7 @@
         <tbody>
             @foreach (var ticket in Model.Tickets)
             {
-                <tr>
+                <tr class="@(ticket.Priority?.Equals("Critical", StringComparison.OrdinalIgnoreCase) == true ? "table-warning" : ticket.Priority?.Equals("Critical", StringComparison.OrdinalIgnoreCase) == true ? "table-danger" : "")">
                     <td>@ticket.Id</td>
                     <td>@ticket.Title</td>
                     <td>
@@ -70,7 +70,7 @@
                     <td>@ticket.Status</td>
                     <td>@ticket.Priority</td>
                     <td>@ticket.Category</td>
-                    <td>@ticket.CreatedDate.ToString("dd MMM yyyy")</td>
+                    <td>@ticket.CreatedDate?.ToString("dd MMM yyyy")</td>
                     <td>@(string.IsNullOrWhiteSpace(ticket.AssignedTo) ? "Unassigned" : ticket.AssignedTo)</td>
                     <td class="text-nowrap">
                         <a class="btn btn-sm btn-outline-secondary" asp-page="./Details" asp-route-id="@ticket.Id">Details</a>

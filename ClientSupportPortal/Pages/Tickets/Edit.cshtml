@@ -8,41 +8,54 @@
 
 <form method="post" class="row g-3">
     <input type="hidden" asp-for="Ticket.Id" />
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
 
     <div class="col-md-8">
         <label class="form-label" asp-for="Ticket.Title">Title</label>
         <input class="form-control" asp-for="Ticket.Title" />
+        <span asp-validation-for="Ticket.Title" class="text-danger"></span>
     </div>
     <div class="col-md-4">
         <label class="form-label" asp-for="Ticket.Category">Category</label>
         <input class="form-control" asp-for="Ticket.Category" />
+        <span asp-validation-for="Ticket.Category" class="text-danger"></span>
     </div>
     <div class="col-12">
         <label class="form-label" asp-for="Ticket.Description">Description</label>
         <textarea class="form-control" asp-for="Ticket.Description" rows="4"></textarea>
+        <span asp-validation-for="Ticket.Description" class="text-danger"></span>
     </div>
     <div class="col-md-4">
         <label class="form-label" asp-for="Ticket.RequesterName">Requester name</label>
         <input class="form-control" asp-for="Ticket.RequesterName" />
+        <span asp-validation-for="Ticket.RequesterName" class="text-danger"></span>
     </div>
     <div class="col-md-4">
         <label class="form-label" asp-for="Ticket.RequesterEmail">Requester email</label>
         <input class="form-control" asp-for="Ticket.RequesterEmail" />
+        <span asp-validation-for="Ticket.RequesterEmail" class="text-danger"></span>
     </div>
     <div class="col-md-4">
         <label class="form-label" asp-for="Ticket.AssignedTo">Assigned to</label>
         <input class="form-control" asp-for="Ticket.AssignedTo" />
+        <span asp-validation-for="Ticket.AssignedTo" class="text-danger"></span>
     </div>
     <div class="col-md-3">
         <label class="form-label" asp-for="Ticket.Status">Status</label>
         <input class="form-control" asp-for="Ticket.Status" />
+        <span asp-validation-for="Ticket.Status" class="text-danger"></span>
     </div>
     <div class="col-md-3">
         <label class="form-label" asp-for="Ticket.Priority">Priority</label>
         <input class="form-control" asp-for="Ticket.Priority" />
+        <span asp-validation-for="Ticket.Priority" class="text-danger"></span>
     </div>
     <div class="col-12">
         <button class="btn btn-primary" type="submit">Save</button>
         <a class="btn btn-outline-secondary" asp-page="./Index">Cancel</a>
     </div>
 </form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

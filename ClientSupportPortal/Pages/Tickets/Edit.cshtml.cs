@@ -25,6 +25,12 @@ public class EditModel(TicketService ticketService) : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
+        // Validate the model state
+        if (!ModelState.IsValid)
+        {
+            return Page();
+        }
+
         var ticket = await ticketService.GetByIdAsync(Ticket.Id);
 
         if (ticket == null)

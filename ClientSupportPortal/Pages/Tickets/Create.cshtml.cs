@@ -18,6 +18,11 @@ public class CreateModel(TicketService ticketService) : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
+        // model validation is automatically performed by Razor Pages when the form is submitted. If the model state is invalid, the page will be redisplayed with validation messages.
+        if (!ModelState.IsValid)
+        {
+            return Page();
+        }
         Ticket.CreatedDate = DateTime.Now;
         Ticket.LastUpdatedDate = DateTime.Now;
 
