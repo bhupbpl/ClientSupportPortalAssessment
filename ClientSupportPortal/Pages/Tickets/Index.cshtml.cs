@@ -1,12 +1,14 @@
-using ClientSupportPortal.Data;
 using ClientSupportPortal.Models;
+using ClientSupportPortal.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 
 namespace ClientSupportPortal.Pages.Tickets;
 
-public class IndexModel(AppDbContext context) : PageModel
+/// <summary>
+/// Razor Page model for displaying and filtering the list of support tickets.
+/// </summary>
+public class IndexModel(TicketService ticketService) : PageModel
 {
     [BindProperty(SupportsGet = true)]
     public string? SearchTerm { get; set; }
@@ -25,46 +27,19 @@ public class IndexModel(AppDbContext context) : PageModel
 
     public string[] PriorityOptions { get; } = ["Low", "Medium", "High", "Critical"];
 
+    /// <summary>
+    /// Handles GET requests to display filtered tickets.
+    /// Uses TicketService for efficient database-level filtering.
+    /// </summary>
     public async Task OnGetAsync()
     {
-        var tickets = await context.Tickets
-            .OrderBy(t => t.CreatedDate)
-            .ToListAsync();
+        // Delegate to TicketService which handles all filtering logic correctly
+        // and efficiently at the database level using IQueryable
+        Tickets = await ticketService.GetFilteredTicketsAsync(
+            SearchTerm,
+            StatusFilter,
+            PriorityFilter);
 
-        if (!string.IsNullOrWhiteSpace(SearchTerm))
-        {
-            var search = SearchTerm.Trim();
-
-            tickets = tickets
-                .Where(t =>
-                    ContainsText(t.Title, search)
-                    || ContainsText(t.Description, search)
-                    || ContainsText(t.RequesterName, search) && (string.IsNullOrWhiteSpace(StatusFilter) || t.Status == StatusFilter)
-                    || ContainsText(t.AssignedTo, search)
-                    || t.AssignedTo == string.Empty && search.Equals("unassigned", StringComparison.OrdinalIgnoreCase))
-                .ToList();
-        }
-
-        if (!string.IsNullOrWhiteSpace(StatusFilter) && string.IsNullOrWhiteSpace(SearchTerm))
-        {
-            tickets = tickets
-                .Where(t => t.Status == StatusFilter)
-                .ToList();
-        }
-
-        if (!string.IsNullOrWhiteSpace(PriorityFilter))
-        {
-            tickets = tickets
-                .Where(t => t.Priority == PriorityFilter)
-                .ToList();
-        }
-
-        Tickets = tickets;
         DisplayedCount = Tickets.Count;
-    }
-
-    private static bool ContainsText(string? value, string search)
-    {
-        return value != null && value.Contains(search, StringComparison.OrdinalIgnoreCase);
     }
 }
