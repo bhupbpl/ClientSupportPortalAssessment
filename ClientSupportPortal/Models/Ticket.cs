@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using ClientSupportPortal.Models.Validation;
 
 namespace ClientSupportPortal.Models;
 
@@ -22,12 +23,15 @@ public class Ticket
     [EmailAddress(ErrorMessage = "Invalid email address")]
     public string? RequesterEmail { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "Status is required")]
+    [ValidStatus]
     public string? Status { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "Priority is required")]
+    [ValidPriority]
     public string? Priority { get; set; }
 
+    [ValidCategory]
     public string? Category { get; set; }
 
     public DateTime? CreatedDate { get; set; }

@@ -17,7 +17,13 @@
     </div>
     <div class="col-md-4">
         <label class="form-label" asp-for="Ticket.Category">Category</label>
-        <input class="form-control" asp-for="Ticket.Category" />
+        <select class="form-select" asp-for="Ticket.Category">
+            <option value="">-- Select Category --</option>
+            @foreach (var category in Model.CategoryOptions)
+            {
+                <option value="@category">@category</option>
+            }
+        </select>
         <span asp-validation-for="Ticket.Category" class="text-danger"></span>
     </div>
     <div class="col-12">
@@ -42,12 +48,22 @@
     </div>
     <div class="col-md-3">
         <label class="form-label" asp-for="Ticket.Status">Status</label>
-        <input class="form-control" asp-for="Ticket.Status" />
+        <select class="form-select" asp-for="Ticket.Status" required>
+            @foreach (var status in Model.StatusOptions)
+            {
+                <option value="@status">@status</option>
+            }
+        </select>
         <span asp-validation-for="Ticket.Status" class="text-danger"></span>
     </div>
     <div class="col-md-3">
         <label class="form-label" asp-for="Ticket.Priority">Priority</label>
-        <input class="form-control" asp-for="Ticket.Priority" />
+        <select class="form-select" asp-for="Ticket.Priority" required>
+            @foreach (var priority in Model.PriorityOptions)
+            {
+                <option value="@priority">@priority</option>
+            }
+        </select>
         <span asp-validation-for="Ticket.Priority" class="text-danger"></span>
     </div>
     <div class="col-12">

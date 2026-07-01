@@ -23,9 +23,9 @@ public class IndexModel(TicketService ticketService) : PageModel
 
     public int DisplayedCount { get; set; }
 
-    public string[] StatusOptions { get; } = ["Open", "In Progress", "Closed"];
+    public string[] StatusOptions => TicketConstants.Status.AllValues;
 
-    public string[] PriorityOptions { get; } = ["Low", "Medium", "High", "Critical"];
+    public string[] PriorityOptions => TicketConstants.Priority.AllValues;
 
     /// <summary>
     /// Handles GET requests to display filtered tickets.

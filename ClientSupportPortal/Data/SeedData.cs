@@ -11,18 +11,9 @@ public static class SeedData
             return;
         }
 
-        var statuses = new[] { "Open", "In Progress", "Closed" };
-        var priorities = new[] { "Low", "Medium", "High", "Critical" };
-        var categories = new[]
-        {
-            "Login Issue",
-            "Reporting",
-            "Data Correction",
-            "Access Request",
-            "Performance",
-            "Integration",
-            "General Support"
-        };
+        var statuses = TicketConstants.Status.AllValues;
+        var priorities = TicketConstants.Priority.AllValues;
+        var categories = TicketConstants.Category.AllValues;
         var assignees = new string?[]
         {
             "Amelia Roberts",
@@ -94,7 +85,7 @@ public static class SeedData
             var createdDate = startDate.AddDays(random.Next(0, 180)).AddHours(random.Next(8, 18)).AddMinutes(random.Next(0, 60));
             var status = statuses[WeightedIndex(random, 45, 35, 20)];
             var priority = priorities[WeightedIndex(random, 35, 40, 18, 7)];
-            var assignedTo = status == "Open" && random.Next(100) < 45 ? null : assignees[random.Next(assignees.Length)];
+            var assignedTo = status == TicketConstants.Status.Open && random.Next(100) < 45 ? null : assignees[random.Next(assignees.Length)];
 
             tickets.Add(new Ticket
             {
